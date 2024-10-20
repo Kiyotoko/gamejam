@@ -1,7 +1,8 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
--- Game created by Leo and Karl for the gamejam 2024.
+-- game
+-- by leo and karl
 ---@diagnostic disable: lowercase-global, undefined-global
 
 -- the player data
@@ -26,23 +27,6 @@ doors = {
 flag_free = 0
 flag_door = 1
 
--- returs the sprite based on the position of the player
--- please note that the position is in pixels
-function get_sprite(x,y)
-	local player_column = (x+ancor.x) / 8
-	local player_row = (y+ancor.y) / 8
-
-	return mget(
-		player_column,
-		player_row
-	)
-end
-
--- returns if a sprite at (x,y) position has the desired flag
-function has_flag(x, y, f)
-	return fget(get_sprite(x, y), f)
-end
-
 -- check if a plate is pressed
 function check_plate(x, y)
 	local sprite = get_sprite(x, y)
@@ -56,7 +40,7 @@ function check_plate(x, y)
 	end
 end
 
--- unlocks the doors on the map. 𝘵his starts at the 
+-- unlocks the doors on the map. This starts at the 
 function unlock_door(d)
 	local door = doors[d]
 	local door_x = door.x
@@ -78,8 +62,36 @@ function unlock_door(d)
 	end
 end
 
--- save the square root of 2
-sqrt_2 = sqrt(2)
+function _update()
+	handle_input()
+end
+
+function _draw()
+	cls(5)
+	map(0, 0, -player.x,-player.y, 16, 16)
+	spr(player.animation, ancor.x-4, ancor.y-8)
+end
+-->8
+-- utility
+
+-- returs the sprite based on the position of the player
+-- please note that the position is in pixels
+function get_sprite(x,y)
+	local player_column = (x+ancor.x) / 8
+	local player_row = (y+ancor.y) / 8
+
+	return mget(
+		player_column,
+		player_row
+	)
+end
+
+-- returns if a sprite at (x,y) position has the desired flag
+function has_flag(x, y, f)
+	return fget(get_sprite(x, y), f)
+end
+-->8
+-- handlers
 
 -- function to handle key
 -- input, moves the player
@@ -93,9 +105,8 @@ function handle_input()
 	if btn(3) then dy=dy+1 end
 
 	-- next position
-	local dis = dx * dx + dy * dy
-	local px = player.x + (dis and dx / sqrt_2 or dx)
-	local py = player.y + (dis and dy / sqrt_2 or dy)
+	local px = player.x + dx
+	local py = player.y + dy
 
 	-- check if it does not hit a wall
 	if has_flag(px, py, flag_free) then
@@ -118,16 +129,6 @@ function handle_animation(dx, dy)
 	elseif dy < 0 then animation=3
 	end
 	player.animation = animation
-end
-
-function _update()
-	handle_input()
-end
-
-function _draw()
-	cls(5)
-	map(0, 0, -player.x,-player.y, 16, 16)
-	spr(player.animation, ancor.x-4, ancor.y-8)
 end
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

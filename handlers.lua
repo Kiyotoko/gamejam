@@ -11,21 +11,38 @@ function handle_input()
 	if btn(2) then dy=dy-1 end
 	if btn(3) then dy=dy+1 end
 
-	-- next position
-	local px = player.x + dx
-	local py = player.y + dy
+  -- save dx,dy for next frame (for deceleration)
+  if not (dx == 0 and dy == 0) then
+    player.prev.dx, player.prev.dy = dx, dy
+  end
 
-	-- check if it does not hit a wall
-	if has_flag(px, py, flag_free) then
-		handle_movement(px, py)
-		handle_animation(dx, dy)
-	end
+  -- next position
+  -- account for diagonals
+  local px = player.x + player.prev.dx * player.vel * (1-(1-1/sqrt(2))*abs(dy))
+	local py = player.y + player.prev.dy * player.vel * (1-(1-1/sqrt(2))*abs(dx))
+
+  -- check if it does not hit a wall
+  -- if it does, check other cases incase we can move along the wall
+	if has_flag(px+player.offset, py+player.offset, flag_free) then handle_movement(px, py, dx, dy)
+  elseif has_flag(player.x+player.offset, py+player.offset, flag_free) then handle_movement(player.x, py, dx, dy)
+	elseif has_flag(px+player.offset, player.y+player.offset, flag_free) then handle_movement(px, player.y, dx, dy) end
+	handle_animation(dx, dy)
 end
 
-function handle_movement(px, py)
+function handle_movement(px, py, dy, dx)
 	if get_sprite(player.x, player.y) ~= get_sprite(px, py) then
 		uncheck_plate(player.x, player.y)
 		check_plate(px, py)
+	end
+
+  -- change in velocity
+  -- depends on dx, dy
+	if dx == 0 and dy == 0 and player.vel > 0 then
+		player.vel = player.vel - player.decel
+	elseif (player.vel < player.vel_max) and not (dx == 0 and dy == 0) then
+		player.vel = player.vel + player.accel
+	elseif (player.vel < 0) then
+		player.vel = 0
 	end
 
 	player.x = px
@@ -48,5 +65,10 @@ function handle_animation(dx, dy)
 		elseif dy > 0 then animation = 0
 		end
 	end
+  if dx == 0 and dy == 0 then
+    animation = player.animation.x -- keeps the current direction
+    player.animation.y = 0 -- idle sprite of the current direction
+    player.animation.tick = 0 -- halts the animation
+  end
 	player.animation.x = animation
 end

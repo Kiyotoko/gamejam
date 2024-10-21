@@ -4,13 +4,25 @@
 player = {
 	x=-32, -- x position on the map in pixels
 	y=-32, -- y position on the map in pixels
+  offset = 4, -- value you have to add to plr.x and plr.y to get players center 
 	animation = {
 		x=0,
 		y=0,
 		tick=0
 	},
+  vel = 0,
+  vel_max = 1.5,
+  accel=0.2,
+  decel=0.5,
+  prev = {
+    dx = 0,
+    dy = 0
+  },
 	gold=0
 }
+
+palt(0,false)   --make black visible
+palt(7,true)    --make white invisible
 
 -- the fixed position of the
 -- player on the screen
@@ -28,8 +40,8 @@ function _draw()
 	cls(5)
 	map(0, 0, -player.x,-player.y, 16, 16)
 
-	if player.animation.tick > 5 then
-		player.animation.y = (player.animation.y + 1) % 3
+	if player.animation.tick > 7 then
+		player.animation.y = (player.animation.y + 1) % 4
 		player.animation.tick = 0
 	else
 		player.animation.tick = player.animation.tick + 1

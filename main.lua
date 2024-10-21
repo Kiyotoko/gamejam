@@ -1,5 +1,3 @@
--- game
--- by leo and karl
 ---@diagnostic disable: lowercase-global, undefined-global
 
 -- the player data
@@ -15,9 +13,9 @@ ancor = {x=64,y=64}
 
 -- the doors on the map
 doors = {
-	[0] = {x=8,y=3,d=1},
-	[1] = {x=13,y=0,d=1},
-	[2] = {x=13,y=6,d=1}
+	[0] = {x=8,y=3,w=1,h=3},
+	[1] = {x=13,y=0,w=1,h=5},
+	[2] = {x=13,y=6,w=1,h=6}
 }
 
 -- defined flags
@@ -40,22 +38,16 @@ end
 -- unlocks the doors on the map. This starts at the 
 function unlock_door(d)
 	local door = doors[d]
-	local door_x = door.x
-	local door_y = door.y
-	local sprite = mget(door.x, door.y)
 
-	-- repeat until sprite has not the door flag
-	while fget(sprite, flag_door) do
-		mset(
-			door_x,
-			door_y,
-			sprite - 48
-		)
-		door_y = door_y + door.d
-		sprite = mget(
-			door_x,
-			door_y
-		)
+	for x=0,door.w-1 do
+		for y=0,door.h-1 do
+			local sprite = mget(door.x + x, door.y + y)
+			mset(
+				door.x + x,
+				door.y + y,
+				sprite - 48
+			)
+		end
 	end
 end
 

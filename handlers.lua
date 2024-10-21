@@ -1,4 +1,3 @@
--- handlers
 ---@diagnostic disable: lowercase-global, undefined-global
 
 -- function to handle key

@@ -16,32 +16,3 @@ end
 function has_flag(x, y, f)
 	return fget(get_sprite(x, y), f)
 end
-
--- check if a plate is pressed
-function check_plate(x, y)
-	local sprite = get_sprite(x, y)
-	if sprite >= start_plate and sprite <= end_plate then
-		mset(
-			(x+ancor.x) / 8,
-			(y+ancor.y) / 8,
-			plate_activated
-		)
-		unlock_door(sprite - 96)
-	end
-end
-
--- unlocks the doors on the map. This starts at the 
-function unlock_door(d)
-	local door = doors[d]
-
-	for x=0,door.w-1 do
-		for y=0,door.h-1 do
-			local sprite = mget(door.x + x, door.y + y)
-			mset(
-				door.x + x,
-				door.y + y,
-				sprite - 48
-			)
-		end
-	end
-end

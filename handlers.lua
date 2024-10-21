@@ -23,19 +23,30 @@ function handle_input()
 end
 
 function handle_movement(px, py)
+	if get_sprite(player.x, player.y) ~= get_sprite(px, py) then
+		uncheck_plate(player.x, player.y)
+		check_plate(px, py)
+	end
+
 	player.x = px
 	player.y = py
 
-	check_plate(px, py)
 end
 
 function handle_animation(dx, dy)
-	player.tick = player.tick + 1
-	if player.tick > 90 then player.tick = 0 end
-	local animation = 16*flr(player.tick/30)
-	if dx < 0 then animation = animation + 1
-	elseif dx > 0 then animation = animation + 2
-	elseif dy < 0 then animation = animation + 3
+	local animation = 0
+	if dx < 0 then animation = 2
+	elseif dx > 0 then animation = 5
 	end
-	player.animation = animation
+
+	if dx ~= 0 then
+		if dy < 0 then animation = animation + 1
+		elseif dy > 0 then animation = animation + 2
+		end
+	else
+		if dy < 0 then animation = 1
+		elseif dy > 0 then animation = 0
+		end
+	end
+	player.animation.x = animation
 end

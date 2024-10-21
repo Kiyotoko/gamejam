@@ -20,11 +20,11 @@ end
 -- check if a plate is pressed
 function check_plate(x, y)
 	local sprite = get_sprite(x, y)
-	if sprite >= 96 and sprite <= 99 then
+	if sprite >= start_plate and sprite <= end_plate then
 		mset(
 			(x+ancor.x) / 8,
 			(y+ancor.y) / 8,
-			100
+			plate_activated
 		)
 		unlock_door(sprite - 96)
 	end

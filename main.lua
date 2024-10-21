@@ -4,7 +4,8 @@
 player = {
 	x=-32, -- x position on the map in pixels
 	y=-32, -- y position on the map in pixels
-	animation=0 -- animation to play
+	animation=0, -- animation to play
+	tick=0
 }
 
 -- the fixed position of the
@@ -22,34 +23,10 @@ doors = {
 flag_free = 0
 flag_door = 1
 
--- check if a plate is pressed
-function check_plate(x, y)
-	local sprite = get_sprite(x, y)
-	if sprite >= 96 and sprite <= 99 then
-		mset(
-			(x+ancor.x) / 8,
-			(y+ancor.y) / 8,
-			100
-		)
-		unlock_door(sprite - 96)
-	end
-end
-
--- unlocks the doors on the map. This starts at the 
-function unlock_door(d)
-	local door = doors[d]
-
-	for x=0,door.w-1 do
-		for y=0,door.h-1 do
-			local sprite = mget(door.x + x, door.y + y)
-			mset(
-				door.x + x,
-				door.y + y,
-				sprite - 48
-			)
-		end
-	end
-end
+-- plates
+start_plate = 96
+end_plate = 99
+plate_activated = 100
 
 function _update()
 	handle_input()

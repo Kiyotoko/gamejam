@@ -30,10 +30,12 @@ function handle_movement(px, py)
 end
 
 function handle_animation(dx, dy)
-	local animation = 0
-	if dx < 0 then animation=1
-	elseif dx > 0 then animation=2
-	elseif dy < 0 then animation=3
+	player.tick = player.tick + 1
+	if player.tick > 90 then player.tick = 0 end
+	local animation = 16*flr(player.tick/30)
+	if dx < 0 then animation = animation + 1
+	elseif dx > 0 then animation = animation + 2
+	elseif dy < 0 then animation = animation + 3
 	end
 	player.animation = animation
 end

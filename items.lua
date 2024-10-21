@@ -23,10 +23,11 @@ end
 
 function pickup_gold()
     local pos = 1
-    for _, pickup in pairs(pickups) do 
-        local dx = pickup.x - player.x
-        local dy = pickup.y - player.y
+    for _, pickup in pairs(pickups) do
+        local dx = pickup.x * 8 - (player.x+ancor.x)
+        local dy = pickup.y * 8 - (player.y+ancor.y)
         if (dx * dx + dy * dy < action_range) then
+            fine("picked up gold!")
             player.gold = player.gold + 1
             deli(pickups, pos)
             break
@@ -40,8 +41,8 @@ function activate_or_pickup()
 
     -- check for chests
     for _, actions in pairs(activatables) do
-        local dx = actions.x * 16 - player.x
-        local dy = actions.y * 16 - player.y
+        local dx = actions.x * 8 - (player.x+ancor.x)
+        local dy = actions.y * 8 - (player.y+ancor.y)
         if dx * dx + dy * dy < action_range then
             -- todo: Activate chest
             deli(activatables, pos)
@@ -54,9 +55,16 @@ function activate_or_pickup()
     pickup_gold()
 end
 
-function render_pickups()
-    -- todo: Render gold
+-- test if a item is already at that position
+function item_in_pos(x, y)
     for _, item in pairs(pickups) do
-        spr(item.sprite, item.x*8 + player.x, item.y*8 + player.y)
+        if item.x == x and item.y == y then return true end
+    end
+    return false
+end
+
+function render_pickups()
+    for _, item in pairs(pickups) do
+        spr(item.sprite, item.x*8 - player.x, item.y*8 - player.y)
     end
 end

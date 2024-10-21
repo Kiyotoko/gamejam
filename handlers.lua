@@ -14,26 +14,25 @@ function handle_input()
 		activate_or_pickup()
 	end
 	if btn(5) then
-		place_gold( -- at current position
-			player.x + ancor.x / 8,
-			player.y + ancor.y / 8
-		)
+		local gx = (player.x + ancor.x) / 8
+		local gy = (player.y + ancor.y) / 8
+		if not item_in_pos(gx, gy) then place_gold(gx, gy) end
 	end
 
-  -- save dx,dy for next frame (for deceleration)
-  if not (dx == 0 and dy == 0) then
-    player.prev.dx, player.prev.dy = dx, dy
-  end
+	-- save dx,dy for next frame (for deceleration)
+	if not (dx == 0 and dy == 0) then
+		player.prev.dx, player.prev.dy = dx, dy
+	end
 
-  -- next position
-  -- account for diagonals
-  local px = player.x + player.prev.dx * player.vel * (1-(1-1/sqrt(2))*abs(dy))
+	-- next position
+	-- account for diagonals
+	local px = player.x + player.prev.dx * player.vel * (1-(1-1/sqrt(2))*abs(dy))
 	local py = player.y + player.prev.dy * player.vel * (1-(1-1/sqrt(2))*abs(dx))
 
-  -- check if it does not hit a wall
-  -- if it does, check other cases incase we can move along the wall
+	-- check if it does not hit a wall
+	-- if it does, check other cases incase we can move along the wall
 	if has_flag(px+player.offset, py+player.offset, flag_free) then handle_movement(px, py, dx, dy)
-  elseif has_flag(player.x+player.offset, py+player.offset, flag_free) then handle_movement(player.x, py, dx, dy)
+	elseif has_flag(player.x+player.offset, py+player.offset, flag_free) then handle_movement(player.x, py, dx, dy)
 	elseif has_flag(px+player.offset, player.y+player.offset, flag_free) then handle_movement(px, player.y, dx, dy) end
 	handle_animation(dx, dy)
 end

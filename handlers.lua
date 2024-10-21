@@ -10,6 +10,15 @@ function handle_input()
 	if btn(1) then dx=dx+1 end
 	if btn(2) then dy=dy-1 end
 	if btn(3) then dy=dy+1 end
+	if btn(4) then
+		activate_or_pickup()
+	end
+	if btn(5) then
+		place_gold( -- at current position
+			player.x + ancor.x / 8,
+			player.y + ancor.y / 8
+		)
+	end
 
   -- save dx,dy for next frame (for deceleration)
   if not (dx == 0 and dy == 0) then

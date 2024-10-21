@@ -32,6 +32,12 @@ ancor = {x=64,y=64}
 flag_free = 0
 flag_door = 1
 
+function _init()
+	player.gold = 3
+	place_gold(3,5)
+	place_gold(4,4)
+end
+
 function _update()
 	handle_input()
 end
@@ -39,6 +45,7 @@ end
 function _draw()
 	cls(5)
 	map(0, 0, -player.x,-player.y, 16, 16)
+	render_pickups()
 
 	if player.animation.tick > 7 then
 		player.animation.y = (player.animation.y + 1) % 4

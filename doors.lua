@@ -7,7 +7,10 @@ doors = {
 
 door_switch = 32
 
--- unlocks the doors on the map. This starts at the 
+-- unlocks the doors on the map. This starts at
+-- the top corner of the defined (x,y) and replaces
+-- all sprites with the sprite that is door_switch
+-- lower than the original sprite.
 function unlock_door(d)
 	local door = doors[d]
 

@@ -32,7 +32,8 @@ end
 function uncheck_plate(x, y)
 	local sprite = get_sprite(x, y)
 	if sprite >= activated_plate_start
-    and sprite <= activated_plate_end then
+    and sprite <= activated_plate_end
+	and not item_in_pos(flr(x), flr(y)) then
 		mset(
 			(x+ancor.x) / 8,
 			(y+ancor.y) / 8,

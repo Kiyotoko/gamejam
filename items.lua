@@ -2,7 +2,9 @@
 
 -- list of chests that can be still looted.
 -- a chest is removed from the list after looting.
-activatables = {}
+chests = {
+	[0] = {x=0, y=0, drops=gold}
+}
 
 -- list of all items that can be picked up from
 -- the map.

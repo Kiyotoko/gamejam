@@ -2,7 +2,9 @@
 
 -- the doors on the map
 doors = {
-	[0] = {x=8,y=5,w=1,h=3}
+	[0] = {x=8,y=5,w=1,h=3},
+	[1] = {x=21,y=3,w=1,h=7},
+	[2] = {x=25,y=3,w=1,h=7}
 }
 
 door_switch = 32

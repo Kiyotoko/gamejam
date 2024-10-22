@@ -11,14 +11,14 @@ action_range = 64
 item_range = 32
 
 -- ids of the different items
-gold = 224
-emerald = 225
-ruby = 226
-sapphire = 227
-sigma = 228
-metal_pipe = 229
-copper_coil = 230
-pyrite = 231
+gold = 152
+emerald = 153
+ruby = 154
+sapphire = 155
+sigma = 156
+metal_pipe = 157
+copper_coil = 110
+pyrite = 111
 
 -- map of the item names
 item_names = {

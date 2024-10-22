@@ -46,6 +46,7 @@ function _update()
 				info("use ⬆️⬇️⬅️➡️ to move around")
 				info("use 🅾️ to interact/pick up")
 				info("use ❎ to drop items")
+        info("hoard as much gold as possible")
 				break
 			end
 		end

@@ -1,5 +1,7 @@
 ---@diagnostic disable: lowercase-global, undefined-global
 
+t = 0 -- time variable for non-player animations
+t_rel = 0 -- slower time variable basically
 -- the player data
 player = {
 	x=-32, -- x position on the map in pixels
@@ -12,18 +14,19 @@ player = {
 	},
 	vel = 0,
 	vel_max = 1.5,
-	accel=0.2,
-	decel=0.5,
+	accel=0.1,
+	decel=0.4,
 	prev = {
 		dx = 0,
 		dy = 0
 	},
 	lock=0, -- prevent dropping multiple items at once
+  drop_timeout = 0, -- time till next possible drop
 	gold=0
 }
 
 palt(0, false) --make black visible
-palt(7, true) --make white invisible
+palt(6, true) --make light grey invisible color
 
 -- the fixed position of the
 -- player on the screen
@@ -33,21 +36,24 @@ ancor = {x=64,y=64}
 flag_free = 0
 
 function _init()
-	player.gold = 3
+	player.gold = 300
 	place_gold(3, 5)
-	-- place_gold(4, 4)
+	-- place_gold(04, 4)
 
 	info("escape the dungeon")
 end
 
 function _update()
 	handle_input()
+  t = t + 1
+  t_rel = flr(t/10) -- only important for item animations, because im lazy
+  if player.drop_timeout > 0 then player.drop_timeout = player.drop_timeout - 1 end
 end
 
 function _draw()
-	cls(5)
+	cls(0)
 	map(0, 0, -player.x,-player.y, 16, 16)
-	render_pickups()
+  animate_pickups()
 
 	if player.animation.tick > 7 then
 		player.animation.y = (player.animation.y + 1) % 4
@@ -56,11 +62,16 @@ function _draw()
 		player.animation.tick = player.animation.tick + 1
 	end
 
-	if player.animation.x > 4 then
+  -- shadow beneath player
+  sspr(12*8, 7*8, 16, 8, ancor.x-4, ancor.y+4, 16, 8, false, false)
+
+  if player.animation.x > 4 then
 		sspr((player.animation.x  - 3) * 16, player.animation.y * 16, 16, 16, ancor.x-4, ancor.y-8, 16, 16, true, false)
 	else
 		sspr(player.animation.x * 16, player.animation.y * 16, 16, 16, ancor.x-4, ancor.y-8, 16, 16, false, false)
 	end
 
+	-- should pickups be on top / below the player?
+  render_pickups()
 	show_message()
 end

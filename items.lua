@@ -111,6 +111,14 @@ function activate_or_pickup()
     end
 end
 
+function compute_score()
+    local score = 0
+    for _, item in pairs(player.items) do
+        if item == gold then score = score +1 end
+    end
+    return score
+end
+
 -- test if an item is already at that position
 ---@param x number the y position in pixels
 ---@param y number the x position in pixels 

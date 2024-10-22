@@ -34,14 +34,23 @@ ancor = {x=64,y=64}
 -- defined flags
 flag_free = 0
 
-function _init()
-  info("escape the dungeon")
-  info("use ⬆️⬇️⬅️➡️ to move around")
-  info("use 🅾️ to interact/pick up")
-  info("use ❎ to drop items")
-end
+started = true
 
 function _update()
+	if started then
+		for i=0, 5 do
+			if btn(i) then
+				started = false
+
+				info("escape the dungeon")
+				info("use ⬆️⬇️⬅️➡️ to move around")
+				info("use 🅾️ to interact/pick up")
+				info("use ❎ to drop items")
+				break
+			end
+		end
+		return
+	end
 	handle_input()
 	t = t + 1
 	t_rel = flr(t/10) -- only important for item animations, because im lazy
@@ -56,8 +65,14 @@ function _update()
 end
 
 function _draw()
-	-- draw map
 	cls(0)
+
+	if started then
+		sspr(10*8, 0, 6*8, 4*8, 0, 0, 6*8*2.5, 4*8*2.5)
+		return
+	end
+
+	-- draw map
 	local sx = max(0, flr(player.x/8))
 	local sy = min(max(0, flr(player.y/8)), 13)
 	map(sx, sy, sx*8-player.x,sy*8-player.y, 18, 18)

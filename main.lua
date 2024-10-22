@@ -37,7 +37,7 @@ flag_free = 0
 function _init()
   info("escape the dungeon")
   info("use ⬆️⬇️⬅️➡️ to move around")
-  info("use 🅾️ to pick up or interact with objects ")
+  info("use 🅾️ to interact/pick up")
   info("use ❎ to drop items")
 end
 

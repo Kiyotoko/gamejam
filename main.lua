@@ -35,7 +35,6 @@ ancor = {x=64,y=64}
 flag_free = 0
 
 function _init()
-	
   info("escape the dungeon")
   info("use ⬆️⬇️⬅️➡️ to move around")
   info("use 🅾️ to pick up or interact with objects ")
@@ -46,7 +45,14 @@ function _update()
 	handle_input()
 	t = t + 1
 	t_rel = flr(t/10) -- only important for item animations, because im lazy
-  if player.timeout > 0 then player.timeout = player.timeout - 1 end
+  	if player.timeout > 0 then player.timeout = player.timeout - 1 end
+
+	-- counter for the info messages
+	counter = counter + 1
+	if counter > 80 then
+		deli(message, 1)
+		counter = 0
+	end
 end
 
 function _draw()

@@ -14,8 +14,8 @@ function handle_input()
 		activate_or_pickup()
 	end
 	if btn(5) then
-		local gx = (player.x + ancor.x) / 8
-		local gy = (player.y + ancor.y) / 8
+		local gx = flr((player.x + ancor.x) / 8)
+		local gy = flr((player.y + ancor.y) / 8)
 		if not item_in_pos(gx, gy) then place_gold(gx, gy) end
 	end
 

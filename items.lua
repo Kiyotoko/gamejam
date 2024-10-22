@@ -73,11 +73,11 @@ function activate_or_pickup()
         pos = pos + 1
     end
 
-    -- Else pickup item
+    -- else pickup item
     pickup_gold()
 end
 
--- test if a item is already at that position
+-- test if an item is already at that position
 function item_in_pos(x, y)
     for _, item in pairs(pickups) do
         if item.x == x and item.y == y then return true end

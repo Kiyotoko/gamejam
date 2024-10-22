@@ -39,7 +39,9 @@ chests = {
 	[1] = {x=13, y=3, closed=true, drops=emerald},
 	[2] = {x=42, y=5, closed=true, drops=ruby},
   [3] = {x=38, y=20, closed=true, drops=gold},
-  [4] = {x=58, y=17, closed=true, drops=copper_coil}
+  [4] = {x=58, y=17, closed=true, drops=copper_coil},
+  [5] = {x=56, y=6, closed=true, drops=sigma},
+  [6] = {x=77, y=15, closed=true, drops=metal_pipe}
 }
 
 chest_flip = 32

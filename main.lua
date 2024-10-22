@@ -56,6 +56,9 @@ function _draw()
 	local sy = max(0, flr(player.y/8))
 	map(sx, sy, sx*8-player.x,sy*8-player.y, sx+16, sy+16)
 
+	-- draw chests
+	render_chests()
+
 	-- draw player
 	if player.animation.tick > 7 then
 		player.animation.y = (player.animation.y + 1) % 4
@@ -72,9 +75,7 @@ function _draw()
 	end
 
 	-- draw pickups
-	-- should pickups be on top / below the player? (karl: top)
 	animate_pickups()
-	render_chests()
 	render_pickups()
 	render_inventory()
 	show_message()

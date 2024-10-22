@@ -19,12 +19,18 @@ gold = 10
 emerald = 11
 ruby = 12
 sapphire = 13
+sigma = 14
+metal_pipe = 15
+copper_coil = 42
 
 item_names = {
     [gold] = "gold",
     [emerald] = "emerald",
     [ruby] = "ruby",
-    [sapphire] = "sapphire"
+    [sapphire] = "sapphire",
+    [sigma] = "sigma?",
+    [metal_pipe] = "metal pipe",
+    [copper_coil] = "copper coil"
 }
 
 -- sigma (?) = 14

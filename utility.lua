@@ -29,7 +29,7 @@ end
 function show_message()
 	if message ~= nil then
 		color(level)
-		print(message)
+		print(message, 4, 4)
 	end
 end
 

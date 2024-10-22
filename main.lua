@@ -35,7 +35,6 @@ flag_free = 0
 function _init()
 	player.gold = 3
 	place_gold(3, 5)
-	-- place_gold(4, 4)
 
 	info("escape the dungeon")
 end
@@ -46,7 +45,9 @@ end
 
 function _draw()
 	cls(5)
-	map(0, 0, -player.x,-player.y, 16, 16)
+	local sx = max(0, flr(player.x/8))
+	local sy = max(0, flr(player.y/8))
+	map(sx, sy, sx*8-player.x,sy*8-player.y, sx+16, sy+16)
 	render_pickups()
 
 	if player.animation.tick > 7 then

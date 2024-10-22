@@ -18,6 +18,7 @@ sapphire = 13
 sigma = 14
 metal_pipe = 15
 copper_coil = 42
+pyrite = 43
 
 -- map of the item names
 item_names = {
@@ -27,7 +28,8 @@ item_names = {
     [sapphire] = "sapphire",
     [sigma] = "sigma?",
     [metal_pipe] = "metal pipe",
-    [copper_coil] = "copper coil"
+    [copper_coil] = "copper coil",
+    [pyrite] = "pyrite??"
 }
 
 -- list of chests that can be still looted.

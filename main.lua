@@ -36,7 +36,7 @@ flag_free = 0
 
 function _init()
 	place_item(3, 5, gold)
-	place_item(5, 8, sapphire)
+	place_item(5, 8, pyrite)
 	place_item(7, 8, copper_coil)
 
 	info("escape the dungeon")

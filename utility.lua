@@ -85,13 +85,31 @@ function show_message()
 end
 
 function warn(msg)
+	if count(messages) > 0 then
+		local last = messages[count(messages)]
+		if last.message == msg then
+			return
+		end
+	end
 	add(messages, {level=loglevel.warn, message=msg})
 end
 
 function info(msg)
+	if count(messages) > 0 then
+		local last = messages[count(messages)]
+		if last.message == msg then
+			return
+		end
+	end
 	add(messages, {level=loglevel.info, message=msg})
 end
 
 function fine(msg)
+	if count(messages) > 0 then
+		local last = messages[count(messages)]
+		if last.message == msg then
+			return
+		end
+	end
 	add(messages, {level=loglevel.fine, message=msg})
 end

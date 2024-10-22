@@ -38,6 +38,8 @@ chests = {
 	[0] = {x=2, y=3, closed=true, drops=gold}
 }
 
+chest_flip = 32
+
 ---places the first item from the player inventory
 ---@param x number the x position in pixels
 ---@param y number the y position in pixels
@@ -100,10 +102,16 @@ function activate_or_pickup()
 			local dx = to_pixel(chest.x+1) - to_map_x(player.x)
 			local dy = to_pixel(chest.y+1) - to_map_y(player.y)
 			if dx * dx + dy * dy < action_range then
-				-- todo: activate chest
 				place_item(chest.x+0.5, chest.y+1.5, chest.drops)
-        chest.closed = false
-        player.timeout = 10
+				chest.closed = false
+				player.timeout = 10
+				for x=0, 1 do
+					for y=0, 1 do
+						local px = chest.x + x
+						local py = chest.y + y
+						mset(px,py, mget(px, py) + chest_flip)
+					end
+				end
 				return
 			end
 		end
@@ -130,13 +138,6 @@ function item_in_pos(x, y)
         if dx*dx+dy*dy < item_range then return true end
     end
     return false
-end
-
-function render_chests()
-	for _, chest in pairs(chests) do
-		sspr(80, (chest.closed and 32 or 48), 16, 16,
-		to_pixel(chest.x) - player.x, to_pixel(chest.y) - player.y)
-	end
 end
 
 function render_pickups()

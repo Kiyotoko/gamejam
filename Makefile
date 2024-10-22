@@ -11,6 +11,7 @@ install:
 	@cp "main.lua" ${path}
 	@cp "plates.lua" ${path}
 	@cp "utility.lua" ${path}
+	@cp "spritesheet.png" ${path}
 
 clean:
 	# remove old files

@@ -20,9 +20,7 @@ player = {
 		dx = 0,
 		dy = 0
 	},
-	lock=0, -- prevent dropping multiple items at once
-  drop_timeout = 0, -- time till next possible drop
-	gold=0
+	items={}
 }
 
 palt(0, false) --make black visible
@@ -36,18 +34,16 @@ ancor = {x=64,y=64}
 flag_free = 0
 
 function _init()
-	player.gold = 300
-	place_gold(3, 5)
-	-- place_gold(04, 4)
+	place_item(3, 5, gold)
+	place_item(5, 8, sapphire)
 
 	info("escape the dungeon")
 end
 
 function _update()
 	handle_input()
-  t = t + 1
-  t_rel = flr(t/10) -- only important for item animations, because im lazy
-  if player.drop_timeout > 0 then player.drop_timeout = player.drop_timeout - 1 end
+	t = t + 1
+	t_rel = flr(t/10) -- only important for item animations, because im lazy
 end
 
 function _draw()

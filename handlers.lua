@@ -16,7 +16,7 @@ function handle_input()
 	if btn(5) then
 		local gx = flr((player.x + ancor.x) / 8)
 		local gy = flr((player.y + ancor.y) / 8)
-		if not item_in_pos(gx, gy) then place_gold(gx, gy) end
+		if not item_in_pos(gx, gy) then player_place_item(gx, gy) end
 	end
 
 	-- save dx,dy for next frame (for deceleration)

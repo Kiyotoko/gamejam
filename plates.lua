@@ -42,7 +42,7 @@ function uncheck_plate(x, y)
 
 	if sprite >= activated_plate_start
     and sprite <= activated_plate_end
-	and not item_in_pos(flr(px), flr(py)) then
+	and not item_in_pos(flr(px)*8, flr(py)*8) then
 		mset(
 			px,
 			py,

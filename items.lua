@@ -31,8 +31,10 @@ function player_place_item(x, y)
     end
 end
 
--- places a gold nugget at the defined (x,y) position
+-- places an item at the defined (x,y) position
+-- position in tiles
 function place_item(x, y, item)
+    -- warn("-> " .. x .. " | " .. y)
     local created = {sprite=item + (1-(t_rel+1) % 2)*16 , x=x, y=y}
     add(pickups, created)
 end
@@ -44,7 +46,7 @@ function pickup_item()
         local dy = pickup.y * 8 - (player.y+ancor.y)
         if (dx * dx + dy * dy < action_range) then
             fine("picked up item!")
-            add(player.items, pickup.sprite)
+            add(player.items, pickup.sprite - (t_rel % 2) * 16)
             deli(pickups, pos)
             break
         end
@@ -83,10 +85,11 @@ function activate_or_pickup()
 end
 
 -- test if an item is already at that position
+-- position in pixels
 function item_in_pos(x, y)
     for _, item in pairs(pickups) do
-        local dx = item.x - x
-        local dy = item.y - y
+        local dx = item.x * 8 - x
+        local dy = item.y * 8 - y
         if dx*dx+dy*dy < item_range then return true end
     end
     return false

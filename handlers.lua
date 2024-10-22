@@ -38,13 +38,14 @@ function handle_input()
 end
 
 function handle_movement(px, py, dx, dy)
-	if get_sprite(player.x, player.y) ~= get_sprite(px, py) then
-		uncheck_plate(player.x, player.y)
-		check_plate(px, py)
+	-- todo: fix plates
+	if player.x ~= px or player.y ~= py then
+		uncheck_plate(player.x+player.offset, player.y+player.offset)
+		check_plate(px+player.offset, py+player.offset)
 	end
 
-  -- change in velocity
-  -- depends on dx, dy
+	-- change in velocity
+	-- depends on dx, dy
 	if dx == 0 and dy == 0 and player.vel > 0 then
 		player.vel = player.vel - player.decel
 	elseif (player.vel < player.vel_max) and not (dx == 0 and dy == 0) then
@@ -73,10 +74,10 @@ function handle_animation(dx, dy)
 		elseif dy > 0 then animation = 0
 		end
 	end
-  if dx == 0 and dy == 0 then
-    animation = player.animation.x -- keeps the current direction
-    player.animation.y = 0 -- idle sprite of the current direction
-    player.animation.tick = 0 -- halts the animation
-  end
+	if dx == 0 and dy == 0 then
+		animation = player.animation.x -- keeps the current direction
+		player.animation.y = 0 -- idle sprite of the current direction
+		player.animation.tick = 0 -- halts the animation
+	end
 	player.animation.x = animation
 end

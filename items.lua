@@ -35,7 +35,8 @@ item_names = {
 -- list of chests that can be still looted.
 -- a chest is removed from the list after looting.
 chests = {
-	[0] = {x=2, y=3, closed=true, drops=gold}
+	[0] = {x=2, y=3, closed=true, drops=gold},
+	[1] = {x=13, y=3, closed=true, drops=emerald}
 }
 
 chest_flip = 32

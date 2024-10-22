@@ -5,7 +5,7 @@ t_rel = 0 -- slower time variable basically
 -- the player data
 player = {
 	x=-32, -- x position on the map in pixels
-	y=-32, -- y position on the map in pixels
+	y=-16, -- y position on the map in pixels
 	offset = 4, -- value you have to add to plr.x and plr.y to get players center 
 	animation = { -- the animation
 		x=0,
@@ -49,7 +49,7 @@ function _update()
 
 	-- counter for the info messages
 	counter = counter + 1
-	if counter > 80 then
+	if counter > 15 then
 		deli(message, 1)
 		counter = 0
 	end

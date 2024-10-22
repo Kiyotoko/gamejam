@@ -36,7 +36,8 @@ item_names = {
 -- a chest is removed from the list after looting.
 chests = {
 	[0] = {x=2, y=3, closed=true, drops=gold},
-	[1] = {x=13, y=3, closed=true, drops=emerald}
+	[1] = {x=13, y=3, closed=true, drops=emerald},
+	[2] = {x=42, y=5, closed=true, drops=ruby}
 }
 
 chest_flip = 32

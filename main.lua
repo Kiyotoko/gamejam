@@ -20,7 +20,8 @@ player = {
 		dx = 0,
 		dy = 0
 	},
-	items={}
+	items={},
+  timeout = 0,
 }
 
 palt(0, false) --make black visible
@@ -45,6 +46,7 @@ function _update()
 	handle_input()
 	t = t + 1
 	t_rel = flr(t/10) -- only important for item animations, because im lazy
+  if player.timeout > 0 then player.timeout = player.timeout - 1 end
 end
 
 function _draw()

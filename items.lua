@@ -62,12 +62,13 @@ function pickup_item()
     for _, pickup in pairs(pickups) do
         local dx = to_pixel(pickup.x) - to_map_x(player.x)
         local dy = to_pixel(pickup.y) - to_map_y(player.y)
-        if (dx * dx + dy * dy < action_range) then
+        if (dx * dx + dy * dy < action_range) and (player.timeout == 0) then
             local item = pickup.sprite - (t_rel % 2) * 16
             fine("picked up " .. item_names[item] .."!")
             add(player.items, item)
             deli(pickups, pos)
             uncheck_plate(to_pixel(pickup.x) - ancor.x, to_pixel(pickup.y) - ancor.y)
+            player.timeout = 10
             break
         end
         pos = pos + 1
@@ -88,6 +89,9 @@ end
 function activate_or_pickup()
     local pos = 1
 
+    -- else pick up item
+    pickup_item()
+
     -- check for chests
     for _, chest in pairs(chests) do
 		if chest.closed then
@@ -95,16 +99,14 @@ function activate_or_pickup()
 			local dy = to_pixel(chest.y+1) - to_map_y(player.y)
 			if dx * dx + dy * dy < action_range then
 				-- todo: activate chest
-				place_item(chest.x, chest.y+1, chest.drops)
-				chest.closed = false
+				place_item(chest.x+0.5, chest.y+1.5, chest.drops)
+        chest.closed = false
+        player.timeout = 10
 				return
 			end
 		end
         pos = pos + 1
     end
-
-    -- else pickup item
-    pickup_item()
 end
 
 -- test if an item is already at that position

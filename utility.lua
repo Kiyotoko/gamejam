@@ -6,9 +6,8 @@ loglevel = {
 	info = 140
 }
 
-message = {}
+messages = {}
 counter = 0
-level = loglevel.fine
 
 ---calculates a sprite position in pixles
 ---@param value integer the sprite position
@@ -74,27 +73,25 @@ function has_flag(x, y, f)
 end
 
 function show_message()
-	local msg = message[1]
-	if msg ~= nil then
+	if messages[1] ~= nil then
+		local msg = messages[1].message
+		local lvl = messages[1].level
 		rectfill(60-#msg*2,116,68+#msg*2,128, 0)
 		color(0)
 		print(msg, 64-#msg*2, 121)
-		color(level)
+		color(lvl)
 		print(msg, 64-#msg*2, 120)
 	end
 end
 
 function warn(msg)
-	level = loglevel.warn
-	add(message, msg)
+	add(messages, {level=loglevel.warn, message=msg})
 end
 
 function info(msg)
-	level = loglevel.info
-	add(message, msg)
+	add(messages, {level=loglevel.info, message=msg})
 end
 
 function fine(msg)
-	level = loglevel.fine
-	add(message, msg)
+	add(messages, {level=loglevel.fine, message=msg})
 end

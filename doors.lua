@@ -19,7 +19,6 @@ door_switch = 32
 -- all sprites with the sprite that is door_switch
 -- lower than the original sprite.
 function unlock_door(d)
-	fine("a door opened!")
 	local door = doors[d]
 
 	for x=0,door.w-1 do

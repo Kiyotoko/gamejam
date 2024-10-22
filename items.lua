@@ -183,5 +183,5 @@ function render_inventory()
         pos = pos + 1
     end
     color(loglevel.fine)
-    print("Score: " .. compute_score(), 50, 2)
+    print("score: " .. compute_score(), 50, 2)
 end

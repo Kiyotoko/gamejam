@@ -72,6 +72,7 @@ function _draw()
 	-- draw pickups
 	-- should pickups be on top / below the player? (karl: top)
 	animate_pickups()
+	render_chests()
 	render_pickups()
 	render_inventory()
 	show_message()

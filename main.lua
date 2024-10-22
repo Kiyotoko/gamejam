@@ -46,7 +46,7 @@ function _update()
 				info("use ⬆️⬇️⬅️➡️ to move around")
 				info("use 🅾️ to interact/pick up")
 				info("use ❎ to drop items")
-        info("hoard as much gold as possible")
+				info("hoard as much gold as possible")
 				break
 			end
 		end
@@ -70,6 +70,9 @@ function _draw()
 
 	if started then
 		sspr(10*8, 0, 6*8, 4*8, 0, 0, 6*8*2.5, 4*8*2.5)
+		local msg = "press any button"
+		color(loglevel.fine)
+		print(msg, 64-#msg*2, 120)
 		return
 	end
 

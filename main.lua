@@ -48,29 +48,30 @@ function _update()
 end
 
 function _draw()
+	-- draw map
 	cls(0)
-  animate_pickups()
 	local sx = max(0, flr(player.x/8))
 	local sy = max(0, flr(player.y/8))
 	map(sx, sy, sx*8-player.x,sy*8-player.y, sx+16, sy+16)
 
+	-- draw player
 	if player.animation.tick > 7 then
 		player.animation.y = (player.animation.y + 1) % 4
 		player.animation.tick = 0
 	else
 		player.animation.tick = player.animation.tick + 1
 	end
-
-  -- shadow beneath player
-  sspr(12*8, 7*8, 16, 8, ancor.x-4, ancor.y+4, 16, 8, false, false)
-
-  if player.animation.x > 4 then
+	-- shadow beneath player
+	sspr(12*8, 7*8, 16, 8, ancor.x-4, ancor.y+4, 16, 8, false, false)
+ 	if player.animation.x > 4 then
 		sspr((player.animation.x  - 3) * 16, player.animation.y * 16, 16, 16, ancor.x-4, ancor.y-8, 16, 16, true, false)
 	else
 		sspr(player.animation.x * 16, player.animation.y * 16, 16, 16, ancor.x-4, ancor.y-8, 16, 16, false, false)
 	end
 
-	-- should pickups be on top / below the player?
+	-- draw pickups
+	-- should pickups be on top / below the player? (karl: top)
+	animate_pickups()
 	render_pickups()
 	render_inventory()
 	show_message()

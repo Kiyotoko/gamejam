@@ -14,8 +14,8 @@ function handle_input()
 		activate_or_pickup()
 	end
 	if btn(5) then
-		if not item_in_pos(player.x, player.y) then
-			player_place_item(player.x, player.y)
+		if not item_in_pos(player.x + player.offset, player.y + player.offset) then
+			player_place_item(player.x + player.offset, player.y + player.offset)
 		end
 	end
 
@@ -37,7 +37,7 @@ function handle_input()
 	handle_animation(dx, dy)
 end
 
-function handle_movement(px, py, dy, dx)
+function handle_movement(px, py, dx, dy)
 	if get_sprite(player.x, player.y) ~= get_sprite(px, py) then
 		uncheck_plate(player.x, player.y)
 		check_plate(px, py)

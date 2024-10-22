@@ -8,10 +8,10 @@ activatables = {}
 -- the map.
 pickups = {}
 
--- the max distance to pickup an item or to activate
--- a chest.
+-- the max distance to activate a chest
 action_range = 24
 
+-- the max distance to pickup an item
 item_range = 32
 
 -- ids of the different items
@@ -51,7 +51,7 @@ end
 function place_item(x, y, item)
     local created = {sprite=item + (1-(t_rel+1) % 2)*16, x=x, y=y}
     add(pickups, created)
-    check_plate(created.x, created.y)
+    check_plate(to_pixel(created.x) - ancor.x, to_pixel(created.y) - ancor.y)
 end
 
 function pickup_item()
@@ -64,7 +64,7 @@ function pickup_item()
             fine("picked up " .. item_names[item] .."!")
             add(player.items, item)
             deli(pickups, pos)
-            uncheck_plate(pickup.x, pickup.y)
+            uncheck_plate(to_pixel(pickup.x) - ancor.x, to_pixel(pickup.y) - ancor.y)
             break
         end
         pos = pos + 1
@@ -131,9 +131,13 @@ function render_pickups()
 
     -- draw red outline if player is close 
     if min.dist < 50 then
-      ovalfill(min.x*8 - ceil(player.x) - dsize, min.y*8 - ceil(player.y) - dsize,
-                min.x*8 - ceil(player.x) + dsize + 8, min.y*8 - ceil(player.y) + dsize + 8, 8
-              )
+      	ovalfill(
+			min.x*8 - ceil(player.x) - dsize,
+			min.y*8 - ceil(player.y) - dsize,
+            min.x*8 - ceil(player.x) + dsize + 8,
+			min.y*8 - ceil(player.y) + dsize + 8,
+			8
+        )
     end
 
     for _, item in pairs(pickups) do

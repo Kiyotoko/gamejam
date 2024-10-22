@@ -74,10 +74,10 @@ end
 
 function show_message()
 	if message ~= nil then
-    color(0)
-		print(" - " .. message .. " - ",17,121)
-    color(level)
-		print(" - " .. message .. " - ",16,120)
+		color(0)
+		print(" - " .. message .. " - ", 17, 121)
+		color(level)
+		print(" - " .. message .. " - ", 16, 120)
 	end
 end
 

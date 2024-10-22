@@ -10,7 +10,9 @@ activated_plate_end = 223
 
 plate_switch = 16
 
--- check if a plate is pressed
+---checks if a plate is pressed at the (x,y) position
+---@param x number the position in pixels
+---@param y number the position in pixels
 function check_plate(x, y)
 	local sprite = get_sprite(x, y)
 	if sprite >= deactivated_plate_start
@@ -32,8 +34,8 @@ function check_plate(x, y)
 end
 
 ---check if a plate is deactivated at the (x,y) position
----@param x integer the x position in pixels
----@param y integer the y position in pixels
+---@param x number the x position in pixels
+---@param y number the y position in pixels
 function uncheck_plate(x, y)
 	local sprite = get_sprite(x, y)
 

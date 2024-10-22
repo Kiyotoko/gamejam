@@ -46,10 +46,11 @@ chest_flip = 32
 ---@param x number the x position in pixels
 ---@param y number the y position in pixels
 function player_place_item(x, y)
-    local item = player.items[1]
-    if item ~= nil then
+    local num = count(player.items)
+    if num > 0 then
+        local item = player.items[num]
         place_item(to_map_column(x), to_map_row(y), item)
-        deli(player.items, 1)
+        deli(player.items, num)
     end
 end
 

@@ -35,11 +35,11 @@ ancor = {x=64,y=64}
 flag_free = 0
 
 function _init()
-	place_item(3, 5, gold)
-	place_item(5, 8, pyrite)
-	place_item(7, 8, copper_coil)
-
-	info("escape the dungeon")
+	
+  info("escape the dungeon")
+  info("use ⬆️⬇️⬅️➡️ to move around")
+  info("use 🅾️ to pick up or interact with objects ")
+  info("use ❎ to drop items")
 end
 
 function _update()

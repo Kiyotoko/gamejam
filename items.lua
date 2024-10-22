@@ -107,7 +107,6 @@ function activate_or_pickup()
             local dist = abs(cdx^2 + cdy^2)
 			if dist < action_range then
 				place_item(chest.x+0.5, chest.y+1.5, chest.drops)
-                warn("" .. dist)
 				chest.closed = false
 				player.timeout = 10
 				for x=0, 1 do
@@ -183,4 +182,6 @@ function render_inventory()
         spr(item, to_pixel(pos), 0)
         pos = pos + 1
     end
+    color(loglevel.fine)
+    print("Score: " .. compute_score(), 50, 2)
 end

@@ -19,6 +19,14 @@ gold = 10
 emerald = 11
 ruby = 12
 sapphire = 13
+
+item_names = {
+    [gold] = "gold",
+    [emerald] = "emerald",
+    [ruby] = "ruby",
+    [sapphire] = "sapphire"
+}
+
 -- sigma (?) = 14
 -- metal pipe = 15
 -- copper coil = 42
@@ -34,9 +42,9 @@ end
 -- places an item at the defined (x,y) position
 -- position in tiles
 function place_item(x, y, item)
-    -- warn("-> " .. x .. " | " .. y)
-    local created = {sprite=item + (1-(t_rel+1) % 2)*16 , x=x, y=y}
+    local created = {sprite=item + (1-(t_rel+1) % 2)*16, x=x, y=y}
     add(pickups, created)
+    check_plate(created.x, created.y)
 end
 
 function pickup_item()
@@ -45,9 +53,11 @@ function pickup_item()
         local dx = pickup.x * 8 - (player.x+ancor.x)
         local dy = pickup.y * 8 - (player.y+ancor.y)
         if (dx * dx + dy * dy < action_range) then
-            fine("picked up item!")
-            add(player.items, pickup.sprite - (t_rel % 2) * 16)
+            local item = pickup.sprite - (t_rel % 2) * 16
+            fine("picked up " .. item_names[item] .."!")
+            add(player.items, item)
             deli(pickups, pos)
+            uncheck_plate(pickup.x, pickup.y)
             break
         end
         pos = pos + 1
@@ -98,5 +108,13 @@ end
 function render_pickups()
     for _, item in pairs(pickups) do
         spr(item.sprite, item.x*8 - player.x, item.y*8 - player.y)
+    end
+end
+
+function render_inventory()
+    local pos = 0
+    for _, item in pairs(player.items) do
+        spr(item, pos * 8, 0)
+        pos = pos + 1
     end
 end

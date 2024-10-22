@@ -10,7 +10,7 @@ pickups = {}
 
 -- the max distance to pickup an item or to activate
 -- a chest.
-action_range = 16
+action_range = 24
 
 -- places a gold nugget at the defined (x,y) position
 function place_gold(x, y)

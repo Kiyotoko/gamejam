@@ -68,7 +68,8 @@ function pickup_item()
     for _, pickup in pairs(pickups) do
         local dx = to_pixel(pickup.x) - to_map_x(player.x)
         local dy = to_pixel(pickup.y) - to_map_y(player.y)
-        if (dx * dx + dy * dy < action_range) and (player.timeout == 0) then
+        local dist = abs(dx^2 + dy^2)
+        if (dist < action_range) and (player.timeout == 0) then
             local item = pickup.sprite - (t_rel % 2) * 16
             fine("picked up " .. item_names[item] .."!")
             add(player.items, item)
@@ -101,10 +102,12 @@ function activate_or_pickup()
     -- check for chests
     for _, chest in pairs(chests) do
 		if chest.closed then
-			local dx = to_pixel(chest.x+1) - to_map_x(player.x)
-			local dy = to_pixel(chest.y+1) - to_map_y(player.y)
-			if dx * dx + dy * dy < action_range then
+			local cdx = to_pixel(chest.x+1) - to_map_x(player.x)
+			local cdy = to_pixel(chest.y+1) - to_map_y(player.y)
+            local dist = abs(cdx^2 + cdy^2)
+			if dist < action_range then
 				place_item(chest.x+0.5, chest.y+1.5, chest.drops)
+                warn("" .. dist)
 				chest.closed = false
 				player.timeout = 10
 				for x=0, 1 do
@@ -137,7 +140,8 @@ function item_in_pos(x, y)
     for _, item in pairs(pickups) do
         local dx = to_pixel(item.x - to_map_column(x))
         local dy = to_pixel(item.y - to_map_row(y))
-        if dx*dx+dy*dy < item_range then return true end
+        local dist = abs(dx^2 + dy^2)
+        if dist < item_range then return true end
     end
     return false
 end

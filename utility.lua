@@ -73,9 +73,9 @@ function has_flag(x, y, f)
 end
 
 function show_message()
-	local msg = messages[1].message
-	local lvl = messages[1].level
-	if msg ~= nil then
+	if messages[1] ~= nil then
+		local msg = messages[1].message
+		local lvl = messages[1].level
 		rectfill(60-#msg*2,116,68+#msg*2,128, 0)
 		color(0)
 		print(msg, 64-#msg*2, 121)

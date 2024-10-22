@@ -49,8 +49,8 @@ function _update()
 
 	-- counter for the info messages
 	counter = counter + 1
-	if counter > 15 then
-		deli(message, 1)
+	if counter > 80 then
+		deli(messages, 1)
 		counter = 0
 	end
 end

@@ -59,8 +59,8 @@ function _draw()
 	-- draw map
 	cls(0)
 	local sx = max(0, flr(player.x/8))
-	local sy = max(0, flr(player.y/8))
-	map(sx, sy, sx*8-player.x,sy*8-player.y, sx+16, sy+16)
+	local sy = min(max(0, flr(player.y/8)), 13)
+	map(sx, sy, sx*8-player.x,sy*8-player.y, 18, 18)
 
 	-- draw player
 	if player.animation.tick > 7 then

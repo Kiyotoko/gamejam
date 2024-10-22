@@ -106,8 +106,29 @@ function item_in_pos(x, y)
 end
 
 function render_pickups()
+  --TODO: quicker sort ?  
+    local min = {dist = 2000, x=0,y=0}
     for _, item in pairs(pickups) do
-        spr(item.sprite, item.x*8 - player.x, item.y*8 - player.y)
+      local dist_x = abs(item.x) * 8 - abs(ancor.x + player.x)
+      local dist_y = abs(item.y) * 8 - abs(ancor.y + player.y)
+      local dist = abs(dist_x) + abs(dist_y)
+      if dist < min.dist then
+        min = {dist = dist, x=item.x, y=item.y}
+      end
+    end
+
+    -- var for animation of outline
+    local dsize = 2*sin(t*3.141592/180)
+
+    -- draw red outline if player is close 
+    if min.dist < 50 then
+      ovalfill(min.x*8 - ceil(player.x) - dsize, min.y*8 - ceil(player.y) - dsize,
+                min.x*8 - ceil(player.x) + dsize + 8, min.y*8 - ceil(player.y) + dsize + 8, 8
+              )
+    end
+
+    for _, item in pairs(pickups) do
+      spr(item.sprite, item.x*8 - player.x, item.y*8 - player.y)
     end
 end
 

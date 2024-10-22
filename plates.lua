@@ -20,29 +20,39 @@ function check_plate(x, y)
 			(y+ancor.y) / 8,
 			sprite + plate_switch
 		)
-        if activaten_state[sprite] == nil then
-            activaten_state[sprite] = 1
+
+		local action = sprite - deactivated_plate_start
+        if activaten_state[action] == nil then
+            activaten_state[action] = 1
         else
-            activaten_state[sprite] = activaten_state[sprite] + 1
+            activaten_state[action] = activaten_state[action] + 1
         end
-		unlock_door(sprite - deactivated_plate_start)
+		if activaten_state[action] == 1 then
+			-- only unlock door if it was previously locked
+			-- if it was already unlocked, do nothing
+			unlock_door(sprite - deactivated_plate_start)
+		end
 	end
 end
 
 function uncheck_plate(x, y)
 	local sprite = get_sprite(x, y)
+	local px = (x+ancor.x) / 8
+	local py = (y+ancor.y) / 8
+
 	if sprite >= activated_plate_start
     and sprite <= activated_plate_end
-	and not item_in_pos(flr(x), flr(y)) then
+	and not item_in_pos(flr(px), flr(py)) then
 		mset(
-			(x+ancor.x) / 8,
-			(y+ancor.y) / 8,
+			px,
+			py,
 			sprite - plate_switch
 		)
-        local state = activaten_state[sprite - plate_switch] - 1
+		local action = sprite - activated_plate_start
+        local state = activaten_state[action] - 1
         if state == 0 then
-    		lock_door(sprite - plate_switch - deactivated_plate_start)
+    		lock_door(action)
         end
-        activaten_state[sprite - plate_switch] = state
+        activaten_state[action] = state
 	end
 end

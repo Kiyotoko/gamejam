@@ -37,7 +37,9 @@ item_names = {
 chests = {
 	[0] = {x=2, y=3, closed=true, drops=gold},
 	[1] = {x=13, y=3, closed=true, drops=emerald},
-	[2] = {x=42, y=5, closed=true, drops=ruby}
+	[2] = {x=42, y=5, closed=true, drops=ruby},
+  [3] = {x=38, y=20, closed=true, drops=gold},
+  [4] = {x=58, y=17, closed=true, drops=copper_coil}
 }
 
 chest_flip = 32

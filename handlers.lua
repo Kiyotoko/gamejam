@@ -14,9 +14,9 @@ function handle_input()
 		activate_or_pickup()
 	end
 	if btn(5) then
-		local gx = flr((player.x + ancor.x) / 8)
-		local gy = flr((player.y + ancor.y) / 8)
-		if not item_in_pos(gx * 8, gy * 8) then player_place_item(gx, gy) end
+		if not item_in_pos(player.x, player.y) then
+			player_place_item(player.x, player.y)
+		end
 	end
 
 	-- save dx,dy for next frame (for deceleration)

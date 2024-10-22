@@ -9,19 +9,65 @@ loglevel = {
 message = nil
 level = loglevel.fine
 
--- returs the sprite based on the position of the player
--- please note that the position is in pixels
-function get_sprite(x,y)
-	local player_column = (x+ancor.x) / 8
-	local player_row = (y+ancor.y) / 8
+---calculates a sprite position in pixles
+---@param value integer the sprite position
+---@return number pixel the positin in pixels
+function to_pixel(value)
+	return value * 8
+end
 
+---transforms to the real map pixel position
+---@param x number the x position in pixels
+---@return number
+function to_map_x(x)
+	return (x + ancor.x)
+end
+
+---transforms to the real map pixel position
+---@param y number the y position in pixels
+---@return number
+function to_map_y(y)
+	return (y + ancor.y)
+end
+
+---transforms a pixel coordinate to the tile map column position
+---@param x number
+---@return integer
+function to_map_column(x)
+	return flr(to_map_x(x) / 8)
+end
+
+---transforms a pixel coordinate to the tile map row position
+---@param y number
+---@return integer
+function to_map_row(y)
+	return flr(to_map_y(y) / 8)
+end
+
+---returs the sprite based on the position of the player
+---@param x number the x position in pixels
+---@param y number the y position in pixles
+---@return integer sprite the sprite
+function get_sprite(x, y)
 	return mget(
-		player_column,
-		player_row
+		to_map_column(x),
+		to_map_row(y)
 	)
 end
 
--- returns if a sprite at (x,y) position has the desired flag
+---sets the sprite on the tile map
+---@param x integer the x position
+---@param y integer the y position
+---@param sprite integer the sprite
+function set_sprite(x, y, sprite)
+	mset(
+		to_map_column(x),
+		to_map_row(y),
+		sprite
+	)
+end
+
+---returns if a sprite at (x,y) position has the desired flag
 function has_flag(x, y, f)
 	return fget(get_sprite(x, y), f)
 end

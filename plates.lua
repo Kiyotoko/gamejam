@@ -1,4 +1,4 @@
----@diagnostic disable: lowercase-global, undefined-global
+---@diagnostic disable: lowercase-global
 
 activaten_state = {}
 
@@ -15,11 +15,7 @@ function check_plate(x, y)
 	local sprite = get_sprite(x, y)
 	if sprite >= deactivated_plate_start
     and sprite <= deactivated_plate_end then
-		mset(
-			(x+ancor.x) / 8,
-			(y+ancor.y) / 8,
-			sprite + plate_switch
-		)
+		set_sprite(x, y, sprite + plate_switch)
 
 		local action = sprite - deactivated_plate_start
         if activaten_state[action] == nil then
@@ -35,19 +31,16 @@ function check_plate(x, y)
 	end
 end
 
+---check if a plate is deactivated at the (x,y) position
+---@param x integer the x position in pixels
+---@param y integer the y position in pixels
 function uncheck_plate(x, y)
 	local sprite = get_sprite(x, y)
-	local px = (x+ancor.x) / 8
-	local py = (y+ancor.y) / 8
 
 	if sprite >= activated_plate_start
     and sprite <= activated_plate_end
-	and not item_in_pos(flr(px)*8, flr(py)*8) then
-		mset(
-			px,
-			py,
-			sprite - plate_switch
-		)
+	and not item_in_pos(x, y) then
+		set_sprite(x, y, sprite - plate_switch)
 		local action = sprite - activated_plate_start
         local state = activaten_state[action] - 1
         if state == 0 then

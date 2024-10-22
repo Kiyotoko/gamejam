@@ -14,7 +14,7 @@ action_range = 24
 
 item_range = 32
 
--- ITEM ANIM STARTING TILE NUMBERS (for use in place_*() function)
+-- ids of the different items
 gold = 10
 emerald = 11
 ruby = 12
@@ -23,6 +23,7 @@ sigma = 14
 metal_pipe = 15
 copper_coil = 42
 
+-- map of the item names
 item_names = {
     [gold] = "gold",
     [emerald] = "emerald",
@@ -33,20 +34,20 @@ item_names = {
     [copper_coil] = "copper coil"
 }
 
--- sigma (?) = 14
--- metal pipe = 15
--- copper coil = 42
-
+---places the first item from the player inventory
+---@param x number the x position in pixels
+---@param y number the y position in pixels
 function player_place_item(x, y)
     local item = player.items[1]
     if item ~= nil then
-        place_item(flr(x), flr(y), item)
+        place_item(to_map_column(x), to_map_row(y), item)
         deli(player.items, 1)
     end
 end
 
--- places an item at the defined (x,y) position
--- position in tiles
+---places an item at the defined (x,y) position
+---@param x integer the x position in tiles
+---@param y integer the y position in tiles
 function place_item(x, y, item)
     local created = {sprite=item + (1-(t_rel+1) % 2)*16, x=x, y=y}
     add(pickups, created)
@@ -56,8 +57,8 @@ end
 function pickup_item()
     local pos = 1
     for _, pickup in pairs(pickups) do
-        local dx = pickup.x * 8 - (player.x+ancor.x)
-        local dy = pickup.y * 8 - (player.y+ancor.y)
+        local dx = to_pixel(pickup.x) - to_map_x(player.x)
+        local dy = to_pixel(pickup.y) - to_map_y(player.y)
         if (dx * dx + dy * dy < action_range) then
             local item = pickup.sprite - (t_rel % 2) * 16
             fine("picked up " .. item_names[item] .."!")
@@ -101,26 +102,28 @@ function activate_or_pickup()
 end
 
 -- test if an item is already at that position
--- position in pixels
+---@param x number the y position in pixels
+---@param y number the x position in pixels 
+---@return boolean
 function item_in_pos(x, y)
     for _, item in pairs(pickups) do
-        local dx = item.x * 8 - x
-        local dy = item.y * 8 - y
+        local dx = to_pixel(item.x - to_map_column(x))
+        local dy = to_pixel(item.y - to_map_row(y))
         if dx*dx+dy*dy < item_range then return true end
     end
     return false
 end
 
 function render_pickups()
-  --TODO: quicker sort ?  
+    --TODO: quicker sort ?  
     local min = {dist = 2000, x=0,y=0}
     for _, item in pairs(pickups) do
-      local dist_x = abs(item.x) * 8 - abs(ancor.x + player.x)
-      local dist_y = abs(item.y) * 8 - abs(ancor.y + player.y)
-      local dist = abs(dist_x) + abs(dist_y)
-      if dist < min.dist then
-        min = {dist = dist, x=item.x, y=item.y}
-      end
+		local dx = to_pixel(item.x) - to_map_x(player.x)
+		local dy = to_pixel(item.y) - to_map_y(player.y)
+		local dist = sqrt(dx * dx + dy * dy)
+		if dist < min.dist then
+			min = {dist = dist, x=item.x, y=item.y}
+		end
     end
 
     -- var for animation of outline
@@ -134,14 +137,14 @@ function render_pickups()
     end
 
     for _, item in pairs(pickups) do
-      spr(item.sprite, item.x*8 - player.x, item.y*8 - player.y)
+        spr(item.sprite, to_pixel(item.x) - player.x, to_pixel(item.y) - player.y)
     end
 end
 
 function render_inventory()
     local pos = 0
     for _, item in pairs(player.items) do
-        spr(item, pos * 8, 0)
+        spr(item, to_pixel(pos), 0)
         pos = pos + 1
     end
 end

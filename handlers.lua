@@ -38,7 +38,6 @@ function handle_input()
 end
 
 function handle_movement(px, py, dx, dy)
-	-- todo: fix plates
 	if player.x ~= px or player.y ~= py then
 		uncheck_plate(player.x+player.offset, player.y+player.offset)
 		check_plate(px+player.offset, py+player.offset)

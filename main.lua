@@ -1,7 +1,7 @@
 ---@diagnostic disable: lowercase-global, undefined-global
 
-t = 0 -- time variable for non-player animations
-t_rel = 0 -- slower time variable basically
+animation_timer = 0 -- time variable for non-player animations
+
 -- the player data
 player = {
 	x=-32, -- x position on the map in pixels
@@ -53,8 +53,9 @@ function _update()
 		return
 	end
 	handle_input()
-	t = t + 1
-	t_rel = flr(t/10) -- only important for item animations, because im lazy
+
+	animation_timer = (animation_timer + 1) % 20
+
   	if player.timeout > 0 then player.timeout = player.timeout - 1 end
 
 	-- counter for the info messages
@@ -98,7 +99,6 @@ function _draw()
 	end
 
 	-- draw pickups
-	animate_pickups()
 	render_pickups()
 	render_inventory()
 	show_message()

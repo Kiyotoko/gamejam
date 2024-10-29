@@ -2,17 +2,17 @@
 
 -- the doors on the map
 doors = {
-	[0] = {x=10,y=5,w=1,h=3},
-	[1] = {x=19,y=4,w=1,h=5},
-	[2] = {x=23,y=4,w=1,h=5},
-	[3] = {x=32,y=4,w=1,h=5},
-	[4] = {x=41,y=15,w=1,h=5},
-	[5] = {x=45,y=15,w=1,h=5},
-	[6] = {x=41,y=23,w=1,h=5},
-	[7] = {x=45,y=23,w=1,h=5},
-  [13] = {x=76,y=12,w=5,h=1},
-  [14] = {x=70,y=13,w=5,h=1},
-  [15] = {x=65,y=19,w=1,h=5},
+	[0] = {x=10,y=5,w=1,h=3,activations=0},
+	[1] = {x=19,y=4,w=1,h=5,activations=0},
+	[2] = {x=23,y=4,w=1,h=5,activations=0},
+	[3] = {x=32,y=4,w=1,h=5,activations=0},
+	[4] = {x=41,y=15,w=1,h=5,activations=0},
+	[5] = {x=45,y=15,w=1,h=5,activations=0},
+	[6] = {x=41,y=23,w=1,h=5,activations=0},
+	[7] = {x=45,y=23,w=1,h=5,activations=0},
+	[13] = {x=76,y=12,w=5,h=1,activations=0},
+	[14] = {x=70,y=13,w=5,h=1,activations=0},
+	[15] = {x=65,y=19,w=1,h=5,activations=0},
 }
 
 door_switch = 32
